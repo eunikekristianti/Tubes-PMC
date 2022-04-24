@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1650784812 source:d:\itb\kuliah\semester 4\pmc\contoh tubes\main.c
+	<stdio.h>
+	<conio.h>
+	<malloc.h>
+
