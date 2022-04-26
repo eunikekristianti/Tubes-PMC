@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1650960964 source:d:\itb\kuliah\semester 4\pmc\tugas besar\main.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+
