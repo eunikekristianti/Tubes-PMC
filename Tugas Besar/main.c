@@ -60,14 +60,22 @@ int dontCares[MAX_SIZE];
 int main(void) {
     printf("Jumlah variabel (1 sampai 12): ");
     scanf("%d",&bitsSize);
+    while (bitsSize < 1 || bitsSize > 12){
+        printf("Masukkan kembali jumlah variabel dalam range 1 sampai 12: ");
+        scanf("%d", &bitsSize);
+    }
     limit = pow(2,bitsSize);
 
     int i, temp;
     maxGroup = -1;
     newMaxGroup = -1;
 
-    printf("Jumlah minterm: ");
+    printf("Jumlah minterms (>=0): ");
     scanf("%d",&minterms);
+    while (minterms < 0){
+        printf("Masukkan kembali jumlah minterms (>=0): ");
+        scanf("%d", &minterms);
+    }
     if (minterms==0){
         return 1;
     }
