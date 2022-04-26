@@ -82,7 +82,7 @@ int main(void) {
     for(i=0; i<minterms; i++){
         scanf("%d",&temp);
         while (temp < 0 || temp >= limit){
-            printf("Masukkan kembali dalam range 0 sampai %d\n", limit-1);
+            printf("Masukkan minterm kembali dalam range 0 sampai %d\n", limit-1);
             scanf("%d",&temp);
         }
         mintermsGiven[temp] = 1;
