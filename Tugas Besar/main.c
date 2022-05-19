@@ -266,7 +266,7 @@ void tampilkanDataMinterm() {     //menampilkan minterms dan datanya
         printf("   ");
         while(j < bitsSize){
             if(p->binary[j] == -1){
-                printf("%c",'-');
+                printf("%c",'_');
             }
             else {
                 printf("%d",p->binary[j]);
