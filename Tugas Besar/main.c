@@ -282,11 +282,11 @@ void tampilkanDataMinterm() {     //menampilkan minterms dan datanya
 void pair() {    //membandingkan minterm
     node *p, *q;
     int oneMatched = 0;
-    static int iteration = 1;
+    static int iterasi = 1;
     p = head;
     q = p;
-    printf("\nIterasi ke-%d:\n", iteration);
-    iteration++;
+    printf("\nIterasi ke-%d:\n", iterasi);
+    iterasi++;
     tampilkanDataMinterm();
     newMaxGroup = -1;
     while (p->group != maxGroup){
@@ -372,14 +372,14 @@ void tambahkeTable(){
 }
 
 int cariMax(int *row) {      //mencari prime implicant dengan unused minterm terbanyak
-    int i, greatest = -1;
+    int i, maxx = -1;
     for (i = 0; i < Table.sum; i++){
-        if (Table.mintermCounter[i] > greatest){
+        if (Table.mintermCounter[i] > maxx){
             *row = i;
-            greatest = Table.mintermCounter[i];
+            maxx = Table.mintermCounter[i];
         }
     }
-    return greatest;
+    return maxx;
 }
 
 void analisisTable() {     //menentukan essential prime implicants dan menampilkan hasilnya
@@ -466,15 +466,15 @@ int jumlahImplicants(int n, int *temp) {    //mengembalikan jumlah minterm terte
 
 void binerkeNotasiMinterm(int n) {  //mengkonversi bilangan biner ke dalam variabel dan menampilkannya
     int c = 0;
-    char charactersNormal[] = {'A','B','C','D','E','F','G','H','I','J','K','L'};
-    char charactersComplement[] = {'a','b','c','d','e','f','g','h','i','j','k','l'};
+    char normal[] = {'A','B','C','D','E','F','G','H','I','J','K','L'};
+    char komplemen[] = {'a','b','c','d','e','f','g','h','i','j','k','l'};
     while (c != bitsSize){
         if (Table.arr[n][c] != -1){
             if (Table.arr[n][c] == 1){
-                printf("%c", charactersNormal[c]);
+                printf("%c", normal[c]);
             }
             else {
-                printf("%c", charactersComplement[c]);
+                printf("%c", komplemen[c]);
             }
         }
         c++;
@@ -483,14 +483,14 @@ void binerkeNotasiMinterm(int n) {  //mengkonversi bilangan biner ke dalam varia
 
 int cekPairing(node *a, node *b) {  //mengecek apakah 2 bilangan biner hanya berbeda 1 angka
     int c = bitsSize-1;
-    int ifOneDissimilar = 0;
+    int ifBedaSatu = 0;
     while (c != -1){
         if (a->binary[c] != b->binary[c]){
-            if (ifOneDissimilar){
+            if (ifBedaSatu){
                 return 0;
             }
             else {
-                ifOneDissimilar=1;
+                ifBedaSatu=1;
             }
         }
         c--;
