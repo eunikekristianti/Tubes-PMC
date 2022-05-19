@@ -453,7 +453,7 @@ void hapusMinterm(int n) {   //menghapus minterm dari tabel
     }
 }
 
-int jumlahImplicants(int n, int *temp) {    //returns in how many implicants a particular minterm is present
+int jumlahImplicants(int n, int *temp) {    //mengembalikan jumlah minterm tertentu ada pada berapa implicant returns in how many implicants a particular minterm is present
     int i, j;
     int count = 0;
     for (i = 0; i < Table.sum; i++){
