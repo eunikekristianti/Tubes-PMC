@@ -29,27 +29,27 @@ struct implicantsTable {        //Tabel Prime Implicants
 } Table;
 
 //deklarasi fungsi dan variabel
-void add(int);
-node* createNode(int);
+void tambahMinterm(int);
+node* buatNode(int);
 void pair();
-void display();
-void displayTable();
-node* createNodePair(node*, node*);
+void tampilkanDataMinterm();
+void tampilkanTable();
+node* buatNodePair(node*, node*);
 void binaryFill(node*, node*, node*);
 void initTable();
-int ifPairingPossible(node*, node*);
+int cekPairing(node*, node*);
 int ifDontCare(int);
-int ifMintermPresentInImplicant(int, int);
-void addPair(node*, node*);
-void addToTable();
-void analyseTable();
+int cekMinterm(int, int);
+void tambahPair(node*, node*);
+void tambahkeTable();
+void analisisTable();
 void binaryFill(node*, node*, node*);
-void convertBinaryToMintermNotation(int);
-int findMaxInTable(int*);
+void binerkeNotasiMinterm(int);
+int cariMax(int*);
 void initTable();
-int numberOfImplicants(int, int*);
+int jumlahImplicants(int, int*);
 void pair();
-void removeMintermsFromTable(int);
+void hapusMinterm(int);
 
 node *head, *head2;
 int minterms;
@@ -94,15 +94,15 @@ int main(void) {
             scanf("%d",&temp);
         }
         mintermsGiven[temp] = 1;
-        add(temp);
+        tambahMinterm(temp);
     }
 
     Table.sum=0;
     initTable();    //inisialisasi tabel dengan nilai -1
     pair();
-    displayTable(); //menampilkan tabel prime implicants
+    tampilkanTable(); //menampilkan tabel prime implicants
     printf("\nPersamaan boolean yang telah disederhanakan: ");
-    analyseTable();  //menentukan essential prime implicants dan menampilkan hasilnya
+    analisisTable();  //menentukan essential prime implicants dan menampilkan hasilnya
     return 1;
 }
 
@@ -115,9 +115,9 @@ int ifDontCare(int i) {    //mengecek apakah minterm merupakan dont Care
     }
 }
 
-void add(int n) {    //membuat linked list untuk menyimpan minterm
+void tambahMinterm(int n) {    //membuat linked list untuk menyimpan minterm
     node *p, *q, *temp;
-    p = createNode(n);
+    p = buatNode(n);
     if (p != NULL){
         if (head == NULL){
             head = p;
@@ -147,9 +147,9 @@ void add(int n) {    //membuat linked list untuk menyimpan minterm
     }
 }
 
-void addPair(node *p, node *q) {   //membuat linked list untuk menyimpan matched pairs
+void tambahPair(node *p, node *q) {   //membuat linked list untuk menyimpan matched pairs
     node *r, *temp;
-    r = createNodePair(p,q);
+    r = buatNodePair(p,q);
     if (head2 == NULL){
         head2 = r;
     }
@@ -162,7 +162,7 @@ void addPair(node *p, node *q) {   //membuat linked list untuk menyimpan matched
     }
 }
 
-node* createNodePair(node *p, node *q) {    //membuat node baru
+node* buatNodePair(node *p, node *q) {    //membuat node baru
     int i, j;
     node *r;
     r = (node *)malloc(sizeof(node));
@@ -185,11 +185,11 @@ node* createNodePair(node *p, node *q) {    //membuat node baru
     return r;
 }
 
-void displayTable() {   //menampilkan tabel prime implicants
+void tampilkanTable() {   //menampilkan tabel prime implicants
     int i, j;
     printf("\nTabel Prime Implicants:\n");
     for (i = 0; i < Table.sum; i++){
-        convertBinaryToMintermNotation(i);
+        binerkeNotasiMinterm(i);
         for (j = 0; j <= limit-1; j++){
             if (Table.brr[i][j] == 1){
                 printf("   %d  ", j);
@@ -212,7 +212,7 @@ void binaryFill(node *p,node *q,node *r) {      //mengisi r dengan nilai biner m
     }
 }
 
-node* createNode(int n) {   //membuat node untuk menyimpan data dari minterm
+node* buatNode(int n) {   //membuat node untuk menyimpan data dari minterm
     int c = bitsSize-1;
     node *p;
     p = (node *)malloc(sizeof(node));
@@ -253,7 +253,7 @@ void initTable() {
     }
 }
 
-void display() {     //menampilkan minterms dan datanya
+void tampilkanDataMinterm() {     //menampilkan minterms dan datanya
     int c = 1, count = 0, j = 0;
     node *p;
     p = head;
@@ -289,7 +289,7 @@ void pair() {    //membandingkan minterm
     q = p;
     printf("\nIterasi ke-%d:\n", iteration);
     iteration++;
-    display();
+    tampilkanDataMinterm();
     newMaxGroup = -1;
     while (p->group != maxGroup){
         q = q->next;
@@ -307,18 +307,18 @@ void pair() {    //membandingkan minterm
                 q = p;
                 continue;
             }
-            if (ifPairingPossible(p,q)) {
+            if (cekPairing(p,q)) {
                 oneMatched = 1;
                 p->hasPaired = 1;
                 q->hasPaired = 1;
-                addPair(p,q);
+                tambahPair(p,q);
                 if ((p->group) > newMaxGroup){
                     newMaxGroup = p->group;
                 }
             }
         }
     }
-    addToTable();
+    tambahkeTable();
     if (oneMatched) {
         head = head2;
         head2 = NULL;
@@ -327,7 +327,7 @@ void pair() {    //membandingkan minterm
     }
 }
 
-void addToTable(){
+void tambahkeTable(){
     int i, j, k, allMatched;
     node *p;
     p = head;
@@ -373,7 +373,7 @@ void addToTable(){
     }
 }
 
-int findMaxInTable(int *row) {      //mencari prime implicant dengan unused minterm terbanyak
+int cariMax(int *row) {      //mencari prime implicant dengan unused minterm terbanyak
     int i, greatest = -1;
     for (i = 0; i < Table.sum; i++){
         if (Table.mintermCounter[i] > greatest){
@@ -384,7 +384,7 @@ int findMaxInTable(int *row) {      //mencari prime implicant dengan unused mint
     return greatest;
 }
 
-void analyseTable() {     //menentukan essential prime implicants dan menampilkan hasilnya
+void analisisTable() {     //menentukan essential prime implicants dan menampilkan hasilnya
     int i, j, greatestRow, ifFirst = 1;
     int essentialPrimeImplicant[limit];
     int temp;
@@ -393,7 +393,7 @@ void analyseTable() {     //menentukan essential prime implicants dan menampilka
     }
     for (i = 0; i <= limit-1; i++){
         if (mintermsGiven[i] == 1){
-            if (numberOfImplicants(i,&temp) == 1){
+            if (jumlahImplicants(i,&temp) == 1){
                 essentialPrimeImplicant[i] = temp;
             }
         }
@@ -406,8 +406,8 @@ void analyseTable() {     //menentukan essential prime implicants dan menampilka
             else {
                 ifFirst = 0;
             }
-            convertBinaryToMintermNotation(essentialPrimeImplicant[i]);
-            removeMintermsFromTable(essentialPrimeImplicant[i]);
+            binerkeNotasiMinterm(essentialPrimeImplicant[i]);
+            hapusMinterm(essentialPrimeImplicant[i]);
             for (j = i+1; j <= limit-1; j++){
                 if (essentialPrimeImplicant[j] == essentialPrimeImplicant[i]){
                     essentialPrimeImplicant[j] = -1;
@@ -416,20 +416,20 @@ void analyseTable() {     //menentukan essential prime implicants dan menampilka
             essentialPrimeImplicant[i] = -1;
         }
     }
-    while (findMaxInTable(&greatestRow) != 0){
+    while (cariMax(&greatestRow) != 0){
         if (ifFirst != 1){
             printf(" + ");
         }
         else {
             ifFirst = 0;
         }
-        convertBinaryToMintermNotation(greatestRow);
-        removeMintermsFromTable(greatestRow);
+        binerkeNotasiMinterm(greatestRow);
+        hapusMinterm(greatestRow);
     }
     printf("\b\n");
 }
 
-int ifMintermPresentInImplicant(int minterm, int implicant) { //mengecek apakah minterm ada pada tabel
+int cekMinterm(int minterm, int implicant) { //mengecek apakah minterm ada pada tabel
     if (Table.brr[implicant][minterm] == 1){
         return 1;
     }
@@ -438,7 +438,7 @@ int ifMintermPresentInImplicant(int minterm, int implicant) { //mengecek apakah 
     }
 }
 
-void removeMintermsFromTable(int n) {   //menghapus minterm dari tabel
+void hapusMinterm(int n) {   //menghapus minterm dari tabel
     int i, j;
     for (i = 0; i <= limit-1; i++){
         if (Table.brr[n][i] == 1){
@@ -453,7 +453,7 @@ void removeMintermsFromTable(int n) {   //menghapus minterm dari tabel
     }
 }
 
-int numberOfImplicants(int n, int *temp) {    //returns in how many implicants a particular minterm is present
+int jumlahImplicants(int n, int *temp) {    //returns in how many implicants a particular minterm is present
     int i, j;
     int count = 0;
     for (i = 0; i < Table.sum; i++){
@@ -466,7 +466,7 @@ int numberOfImplicants(int n, int *temp) {    //returns in how many implicants a
     return count;
 }
 
-void convertBinaryToMintermNotation(int n) {  //mengkonversi bilangan biner ke dalam variabel dan menampilkannya
+void binerkeNotasiMinterm(int n) {  //mengkonversi bilangan biner ke dalam variabel dan menampilkannya
     int c = 0;
     char charactersNormal[] = {'A','B','C','D','E','F','G','H','I','J','K','L'};
     char charactersComplement[] = {'a','b','c','d','e','f','g','h','i','j','k','l'};
@@ -483,7 +483,7 @@ void convertBinaryToMintermNotation(int n) {  //mengkonversi bilangan biner ke d
     }
 }
 
-int ifPairingPossible(node *a, node *b) {  //mengecek apakah 2 bilangan biner hanya berbeda 1 angka
+int cekPairing(node *a, node *b) {  //mengecek apakah 2 bilangan biner hanya berbeda 1 angka
     int c = bitsSize-1;
     int ifOneDissimilar = 0;
     while (c != -1){
