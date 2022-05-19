@@ -183,20 +183,6 @@ node* buatNodePair(node *p, node *q) {    //membuat node baru
     return r;
 }
 
-void tampilkanTable() {   //menampilkan tabel prime implicants
-    int i, j;
-    printf("\nTabel Prime Implicants:\n");
-    for (i = 0; i < Table.sum; i++){
-        binerkeNotasiMinterm(i);
-        for (j = 0; j <= limit-1; j++){
-            if (Table.brr[i][j] == 1){
-                printf("   %d  ", j);
-            }
-        }
-        printf("\n");
-    }
-}
-
 void binaryFill(node *p,node *q,node *r) {      //mengisi r dengan nilai biner menggunakan p dan qnd q
     int c = bitsSize-1;
     while (c != -1){
@@ -242,43 +228,6 @@ node* buatNode(int n) {   //membuat node untuk menyimpan data dari minterm
     return p;
 }
 
-void initTable() {
-    int i, j;
-    for(j = 0; j <= limit-1; j++){
-        for(i = 0; i <= limit-1; i++){
-            Table.brr[j][i] = -1;
-        }
-    }
-}
-
-void tampilkanDataMinterm() {     //menampilkan minterms dan datanya
-    int c = 1, count = 0, j = 0;
-    node *p;
-    p = head;
-    while (p != NULL){
-        j = 0;
-        while(count < (p->numberOfPairs)){
-            printf("%d,", p->paired.paired[count]);
-            count++;
-        }
-        printf("\b");
-        count = 0;
-        printf("   ");
-        while(j < bitsSize){
-            if(p->binary[j] == -1){
-                printf("%c",'_');
-            }
-            else {
-                printf("%d",p->binary[j]);
-            }
-            j++;
-        }
-        printf("\n");
-        c++;
-        p = p->next;
-    }
-}
-
 void pair() {    //membandingkan minterm
     node *p, *q;
     int oneMatched = 0;
@@ -322,6 +271,43 @@ void pair() {    //membandingkan minterm
         head2 = NULL;
         maxGroup = newMaxGroup;
         pair();
+    }
+}
+
+void tampilkanDataMinterm() {     //menampilkan minterms dan datanya
+    int c = 1, count = 0, j = 0;
+    node *p;
+    p = head;
+    while (p != NULL){
+        j = 0;
+        while(count < (p->numberOfPairs)){
+            printf("%d,", p->paired.paired[count]);
+            count++;
+        }
+        printf("\b");
+        count = 0;
+        printf("   ");
+        while(j < bitsSize){
+            if(p->binary[j] == -1){
+                printf("%c",'_');
+            }
+            else {
+                printf("%d",p->binary[j]);
+            }
+            j++;
+        }
+        printf("\n");
+        c++;
+        p = p->next;
+    }
+}
+
+void initTable() {
+    int i, j;
+    for(j = 0; j <= limit-1; j++){
+        for(i = 0; i <= limit-1; i++){
+            Table.brr[j][i] = -1;
+        }
     }
 }
 
@@ -496,4 +482,18 @@ int cekPairing(node *a, node *b) {  //mengecek apakah 2 bilangan biner hanya ber
         c--;
     }
     return 1;
+}
+
+void tampilkanTable() {   //menampilkan tabel prime implicants
+    int i, j;
+    printf("\nTabel Prime Implicants:\n");
+    for (i = 0; i < Table.sum; i++){
+        binerkeNotasiMinterm(i);
+        for (j = 0; j <= limit-1; j++){
+            if (Table.brr[i][j] == 1){
+                printf("   %d  ", j);
+            }
+        }
+        printf("\n");
+    }
 }
