@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#define MAX_SIZE 4096 
+#define MAX_SIZE 4096
 
 int bitsSize;    //banyaknya variabel
 int limit;       //angka terbesar pada minterm
@@ -43,10 +43,8 @@ int cekMinterm(int, int);
 void tambahPair(node*, node*);
 void tambahkeTable();
 void analisisTable();
-void binaryFill(node*, node*, node*);
 void binerkeNotasiMinterm(int);
 int cariMax(int*);
-void initTable();
 int jumlahImplicants(int, int*);
 void pair();
 void hapusMinterm(int);
