@@ -56,6 +56,7 @@ int mintermsGiven[MAX_SIZE];
 int dontCares[MAX_SIZE];
 
 int main(void) {
+    printf("PROGRAM MINIMISASI LOGIKA\n\n");
     printf("Jumlah variabel (1 sampai 12): ");
     scanf("%d",&bitsSize);
     while (bitsSize < 1 || bitsSize > 12){
