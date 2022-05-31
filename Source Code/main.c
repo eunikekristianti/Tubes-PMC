@@ -69,14 +69,14 @@ int main(void) {
     maxGroup = -1;
     newMaxGroup = -1;
 
-    printf("Jumlah minterms (>=0): ");
+    printf("Jumlah minterms (0 sampai %d): ", limit);
     scanf("%d",&minterms);
     while (minterms < 0){
-        printf("Masukkan kembali jumlah minterms (>=0): ");
+        printf("Masukkan kembali jumlah minterms (0 sampai %d): ", limit);
         scanf("%d", &minterms);
     }
     if (minterms==0){
-        printf("F = 0");
+        printf("\nF = 0");
         return 1;
     }
     for (i=0; i<limit; i++){
@@ -86,6 +86,8 @@ int main(void) {
         dontCares[i] = -1;
     }
 
+    int count = 0;
+
     printf("Masukkan minterms (0 sampai %d):\n", limit-1);
     for(i=0; i<minterms; i++){
         scanf("%d",&temp);
@@ -93,8 +95,16 @@ int main(void) {
             printf("Minterm tidak valid. Masukkan kembali dalam range 0 sampai %d\n", limit-1);
             scanf("%d",&temp);
         }
+        if (temp == i){
+            count++;
+        }
         mintermsGiven[temp] = 1;
         tambahMinterm(temp);
+    }
+
+    if (count = limit){
+        printf("\nF = 1");
+        return 1;
     }
 
     Table.sum=0;
