@@ -76,6 +76,7 @@ int main(void) {
         scanf("%d", &minterms);
     }
     if (minterms==0){
+        printf("F = 0");
         return 1;
     }
     for (i=0; i<limit; i++){
@@ -383,6 +384,7 @@ void analisisTable() {     //menentukan essential prime implicants dan menampilk
             }
         }
     }
+
     for (i = 0; i <= limit-1; i++){
         if (essentialPrimeImplicant[i] != -1){
             if (ifFirst != 1){
