@@ -96,13 +96,13 @@ int main(void) {
             scanf("%d",&temp);
         }
         if (temp == i){
-            count++;
+            count += 1;
         }
         mintermsGiven[temp] = 1;
         tambahMinterm(temp);
     }
 
-    if (count = limit){
+    if (count == limit){
         printf("\nF = 1");
         return 1;
     }
