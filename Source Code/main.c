@@ -71,7 +71,7 @@ int main(void) {
 
     printf("Jumlah minterms (0 sampai %d): ", limit);
     scanf("%d",&minterms);
-    while (minterms < 0){
+    while (minterms < 0 || minterms > limit){
         printf("Masukkan kembali jumlah minterms (0 sampai %d): ", limit);
         scanf("%d", &minterms);
     }
